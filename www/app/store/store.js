@@ -92,7 +92,7 @@ export default class Store {
         setState('upvotes', data.map(upvote => new Upvote(upvote)))
       })
   }
-  getdownvotes() {
+  getDownvotes() {
     downvoteApi.get()
       .then(data => {
         console.log(data)
