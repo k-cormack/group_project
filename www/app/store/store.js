@@ -9,19 +9,19 @@ let appStore
 
 //@ts-ignore
 let userApi = axios.create({
-  baseURL: "localhost:3000/auth",
+  baseURL: "//localhost:3000/auth",
   timeout: 3000
 })
 
 // @ts-ignore
 let postApi = axios.create({
-  baseURL: "localhost:3000/api/posts/",
+  baseURL: "//localhost:3000/api/posts/",
   timeout: 3000
 })
 
 // @ts-ignore
 let commentApi = axios.create({
-  baseURL: "localhost:3000/api/comments/",
+  baseURL: "//localhost:3000/api/comments/",
   timeout: 3000
 })
 
