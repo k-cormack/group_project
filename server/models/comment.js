@@ -18,8 +18,8 @@ let schema = new Schema({
   },
   content: {
     content: String,
-    upvotes: Array,
-    downvotes: Array,
+    upvotes: Number,
+    downvotes: Number,
     voteScore: Number
   }
 })
