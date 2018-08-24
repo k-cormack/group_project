@@ -15,3 +15,5 @@ let schema = new Schema({
     type: String
   }
 })
+
+module.exports = mongoose.model(schemaName, schema)
