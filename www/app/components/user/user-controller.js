@@ -2,9 +2,14 @@ import Store from "../../store/store.js";
 import { deflateRaw } from "zlib";
 
 let store = new Store()
+let userLogin = document.getElementById('user')
 
 function draw() {
-  console.log("Login successful")
+  userLogin.innerHTML =
+    `
+  <h1>Hello, ${store.state.user.userName}</h1>
+  <button onclick="app.controllers.post.getPosts()" class="btn-btn-primary">See Posts!</button>
+  `
 }
 
 export default class UserController {

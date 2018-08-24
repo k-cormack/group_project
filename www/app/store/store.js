@@ -13,6 +13,30 @@ let userApi = axios.create({
   timeout: 3000
 })
 
+// @ts-ignore
+let postApi = axios.create({
+  baseURL: "localhost:3000/api/posts/",
+  timeout: 3000
+})
+
+// @ts-ignore
+let commentApi = axios.create({
+  baseURL: "localhost:3000/api/comments/",
+  timeout: 3000
+})
+
+// @ts-ignore
+let upvoteApi = axios.create({
+  baseURL: "localhost:3000/api/upvotes/",
+  timeout: 3000
+})
+
+// @ts-ignore
+let downvoteApi = axios.create({
+  baseURL: "localhost:3000/api/downvotes/",
+  timeout: 3000
+})
+
 let state = {
   user: {},
   activePost: {},
@@ -42,6 +66,38 @@ export default class Store {
         draw()
       })
       .catch(console.error)
+  }
+
+  getPosts(drawPosts) {
+    postApi.get()
+      .then(data => {
+        console.log(data)
+        setState('posts', data.map(post => new Post(post)))
+        drawPosts()
+      })
+  }
+
+  getComments() {
+    commentApi.get()
+      .then(data => {
+        console.log(data)
+        setState('comments', data.map(comment => new Comment(comment)))
+      })
+  }
+
+  getUpvotes() {
+    upvoteApi.get()
+      .then(data => {
+        console.log(data)
+        setState('upvotes', data.map(upvote => new Upvote(upvote)))
+      })
+  }
+  getdownvotes() {
+    downvoteApi.get()
+      .then(data => {
+        console.log(data)
+        setState('downvotes', data.map(downvote => new Downvote(downvote)))
+      })
   }
 
   get state() {

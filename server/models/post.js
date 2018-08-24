@@ -1,6 +1,6 @@
 //POST MODEL
 
-let mongoose = require ('mongoose')
+let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
 let schemaName = 'Post'
@@ -14,17 +14,11 @@ let schema = new Schema({
         type: String,
         default: 'No Description Available'
     },
-    content: [{
-        image: {
-            type: Image
-        },
-        video: {
-            type: VideoTrack
-        },
-        textString: {
-            type: String
-        }
-    }],
+    content: {
+        imgUrl: String,
+        vidUrl: String,
+        textInput: String
+    },
     userId: {
         type: String,
         required: true
@@ -36,12 +30,7 @@ let schema = new Schema({
     comments: {
         type: Array
     },
-    upVotes: {
-        type: Array
-    },
-    downVotes: {
-        type: Array
-    },
+
     voteScore: {
         type: Number
     }
