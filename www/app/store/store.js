@@ -50,7 +50,6 @@ export default class Store {
       .catch(console.error)
   }
 
-
   login(creds, draw) {
     userApi.post('/login/', creds)
       .then(data => {
