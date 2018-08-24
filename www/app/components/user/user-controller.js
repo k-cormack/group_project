@@ -7,7 +7,7 @@ let userLogin = document.getElementById('user')
 function draw() {
   userLogin.innerHTML =
     `
-  <h1>Hello, ${store.state.user.userName}</h1>
+  <h1>Hello, ${store.state.user.username}</h1>
   <button onclick="app.controllers.post.getPosts()" class="btn-btn-primary">See Posts!</button>
   `
 }
