@@ -28,7 +28,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
     Posts.findByIdAndUpdate(req.params.id, req.body)
         .then(() => res.send({
-            message: 'Successfully Poated!'
+            message: 'Successfully Posted!'
         }))
         .catch(next)
 })
