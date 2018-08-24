@@ -1,10 +1,16 @@
 let router = require('express').Router()
 let Posts = require('../models/post')
 
-router.get('./by-user/:userId', (req, res, next) => {
-    Posts.find({
-        userId: req.params.id
-    })
+router.get('/by-user/:userId', (req, res, next) => {
+    Posts.find()
+        .then(postList => {
+            res.send(postList)
+        })
+        .catch(next)
+})
+
+router.get('/', (req, res, next) => {
+    Posts.find()
         .then(postList => {
             res.send(postList)
         })
@@ -36,8 +42,9 @@ router.put('/:id/vote', (req, res, next) => {
             } else {
                 post.votes.push(req.body)
             }
-            post.save()
+            return post.save()
         })
+        .then(() => res.send({ message: "Thanks for the vote" }))
         .catch(next)
 })
 

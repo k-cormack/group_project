@@ -8,7 +8,8 @@ let schemaName = 'User'
 let schema = new Schema({
     userName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,

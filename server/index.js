@@ -26,7 +26,7 @@ server.use('/api/downvotes', downvoteRoutes)
 
 //ERROR HANDLERS
 
-server.use('api/*', (err, req, res, next) => {
+server.use('/api/*', (err, req, res, next) => {
     res.status(400).send(err)
 })
 server.use('*', (req, res, next) => {

@@ -21,17 +21,18 @@ let schema = new Schema({
         default: 'No Description Available'
     },
     content: {
-        imgUrl: String,
-        vidUrl: String,
-        textInput: String
+        imgUrl: { type: String, default: '' },
+        vidUrl: { type: String, default: '' },
+        textInput: { type: String, default: '' }
     },
     userId: {
         type: String,
         required: true
     },
     timeStamp: {
-        type: Date,
-        required: true
+        type: String,
+        required: true,
+        default: Date.now
     },
     comments: {
         type: Array
