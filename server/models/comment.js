@@ -23,21 +23,26 @@ let voteSchema = new Schema({
 
 let schema = new Schema({
   userId: {
-    type: String
+    type: ObjectId,
+    ref: 'User',
+    required: true
   },
   postId: {
-    type: String
+    type: ObjectId,
+    ref: 'Post',
+    required: true
   },
   timestamp: {
-    type: Date
+    type: Date,
+    default: Date.now()
+
   },
   content: {
-    content: String,
-    upvotes: Number,
-    downvotes: Number,
-    voteScore: Number
+    imgUrl: { type: String, default: '' },
+    vidUrl: { type: String, default: '' },
+    textInput: { type: String, default: '' }
   },
-    votes: [voteSchema]
+  votes: [voteSchema]
 })
 module.exports = mongoose.model(schemaName, schema)
 
