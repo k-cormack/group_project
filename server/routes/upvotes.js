@@ -2,7 +2,7 @@ let router = require('express').Router()
 let Upvotes = require('../models/upvote')
 
 router.get('/by-comment/:commentId', (req, res, next) => {
-    Upvotes.findBy({
+    Upvotes.findById({
         commentId: req.params.commentId
     })
     .then(upvoteList => {
