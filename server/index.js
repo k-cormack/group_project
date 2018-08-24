@@ -18,7 +18,7 @@ let commentRoutes = require('./routes/comments')
 let upvoteRoutes = require('./routes/upvotes')
 let downvoteRoutes = require('./routes/downvotes')
 
-server.use('/auth', userRoutes)
+server.use('/auth/login', userRoutes)
 server.use('/api/posts', postRoutes)
 server.use('/api/comments', commentRoutes)
 server.use('/api/upvotes', upvoteRoutes)
