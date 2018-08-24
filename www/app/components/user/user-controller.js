@@ -24,5 +24,14 @@ export default class UserController {
     store.login(creds, draw)
   }
 
+  register(e) {
+    e.preventDefault()
+    let creds = {
+      userName: e.target.userName.value,
+      password: e.target.password.value
+    }
+    store.register(creds, draw)
+  }
+
 
 }

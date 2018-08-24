@@ -2,26 +2,24 @@
 let router = require('express').Router()
 let Comments = require('../models/comment')
 
-router.get('/by-user/:userId', (req, res, next) => {
+router.get('/by-post/:postId', (req, res, next) => {
   Comments.find({
-    userId: req.params.userId
-  }).then(alist => {
-    res.send(alist)
+    userId: req.params.postId
+  }).then(commentList => {
+    res.send(commentList)
   }).catch(next)
 })
 
 router.post('/', (req, res, next) => {
-  Comments.findByIdAndUpdate(req.params.id, req.body)
-    .then(() => res.send({
-      message: 'Success'
-    }))
+  Comments.create(req.body)
+    .then((newComment) => res.send(newComment))
     .catch(next)
 })
 
-router.delete(':id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   Comments.findByIdAndRemove(req.params.id)
     .then(() => res.send({
-      message: 'It worked'
+      message: 'Comment Deleted'
     })).catch(next)
 })
 module.exports = router
