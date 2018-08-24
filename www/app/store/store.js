@@ -52,12 +52,16 @@ function setState(prop, data) {
 }
 
 export default class Store {
-  constructor() {
-    if (appStore) {
-      return appStore
-    }
-    appStore = this
+  
+  register(creds, draw) {
+    userApi.create('/register/', creds)
+    .then(data => {
+      setState('user', new User(data))
+      draw()
+    })
+    .catch(console.error)
   }
+  
 
   login(creds, draw) {
     userApi.post('/login/', creds)
