@@ -6,13 +6,8 @@ let ObjectId = Schema.Types.ObjectId
 let schemaName = 'User'
 
 let schema = new Schema({
-    name: {
+    userName: {
         type: String,
-        required: true
-    },
-    userId: {
-        type: ObjectId,
-        ref: 'User',
         required: true
     },
     password: {
