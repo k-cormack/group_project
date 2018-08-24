@@ -36,7 +36,7 @@ let state = {
 
 function setState(prop, data) {
   state[prop] = data
-  console.log(state)
+  console.log('state: ', state)
 }
 
 export default class Store {
@@ -51,9 +51,9 @@ export default class Store {
   }
 
   login(creds, draw) {
-    userApi.post('/login/', creds)
+    userApi.post('/login', creds)
       .then(data => {
-        console.log(data)
+        console.log('login: ', data)
         setState('user', new User(data.data))
         draw()
       })
@@ -63,7 +63,7 @@ export default class Store {
   getPosts(drawPosts) {
     postApi.get()
       .then(data => {
-        console.log(data)
+        console.log('get posts: ', data)
         setState('posts', data.map(post => new Post(post)))
         drawPosts()
       })
