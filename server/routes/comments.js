@@ -11,5 +11,17 @@ router.get('/by-user/:userId', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-
+  Comments.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => res.send({
+      message: 'Success'
+    }))
+    .catch(next)
 })
+
+router.delete(':id', (req, res, next) => {
+  Comments.findByIdAndRemove(req.params.id)
+    .then(() => res.send({
+      message: 'It worked'
+    })).catch(next)
+})
+module.exports = router
