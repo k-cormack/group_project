@@ -10,4 +10,5 @@ class App {
   }
 }
 
+// @ts-ignore
 window.app = new App()
