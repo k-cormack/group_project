@@ -16,10 +16,10 @@ router.post('/', (req, res, next) => {
     .catch(next)
 })
 
-router.delete(':id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   Comments.findByIdAndRemove(req.params.id)
     .then(() => res.send({
-      message: 'It worked'
+      message: 'Comment Deleted'
     })).catch(next)
 })
 module.exports = router
