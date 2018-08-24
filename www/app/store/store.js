@@ -44,7 +44,7 @@ export default class Store {
   register(creds, draw) {
     userApi.post('/register', creds)
       .then(data => {
-        setState('register', new User(data))
+        setState('user', new User(data.data))
         draw()
       })
       .catch(console.error)
@@ -53,7 +53,7 @@ export default class Store {
   login(creds, draw) {
     userApi.post('/login/', creds)
       .then(data => {
-        setState('user', new User(data))
+        setState('user', new User(data.data))
         draw()
       })
       .catch(console.error)
