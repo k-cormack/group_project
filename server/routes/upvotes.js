@@ -21,17 +21,13 @@ router.post('/', (req, res, next) => {
 
 router.put('/by-comment/:commentId', (req, res, next) => {
     Upvotes.findByIdAndUpdate(req.params.commentId, req.body)
-    .then(() => res.send({
-        message: 'Comment Updated'
-    }))
+    .then((upVotes) => res.send(upVotes))
     .catch(next)
 })
 
 router.delete('/:commentId', (req, res, next) => {
     Upvotes.findByIdAndRemove(req.params.commentId)
-    .then(() => res.send({
-        message: 'Comment Removed'
-    }))
+    .then((upVotes) => res.send(upVotes))
     .catch(next)
 })
 
