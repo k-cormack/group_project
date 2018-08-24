@@ -12,6 +12,7 @@ export default class PostController {
         store.getComments()
         store.getUpvotes()
         store.getDownvotes()
+        drawPost()
     }
 
 
