@@ -44,7 +44,7 @@ export default class Store {
   register(creds, draw) {
     userApi.post('/register', creds)
       .then(data => {
-        setState('register', new User(data.data))
+        setState('user', new User(data.data))
         draw()
       })
       .catch(console.error)
