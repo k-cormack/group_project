@@ -1,5 +1,5 @@
 let express = require('express')
-let bp = ('body-parser')
+let bp = require('body-parser')
 require('./db/db-config')
 let server = express()
 let port = 3000
@@ -26,7 +26,7 @@ server.use('/api/downvotes', downvoteRoutes)
 
 //ERROR HANDLERS
 
-server.use('api/*', (err, req, res, next) =>{
+server.use('api/*', (err, req, res, next) => {
     res.status(400).send(err)
 })
 server.use('*', (req, res, next) => {
