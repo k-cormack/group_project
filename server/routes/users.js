@@ -29,5 +29,14 @@ router.post('/register', (req, res, next) => {
         .catch(next)
 })
 
+//GET All USERS - (perhaps for a site admin?)
+
+router.get('/', (req, res, next) => {
+    Users.find({})
+    .then(users => res.send(users))
+    .catch(next)
+})
+
+
 module.exports = router
 
