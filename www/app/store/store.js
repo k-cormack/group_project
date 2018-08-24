@@ -60,7 +60,7 @@ export default class Store {
   }
 
   login(creds, draw) {
-    userApi.post('/login', creds)
+    userApi.post('/login/', creds)
       .then(data => {
         setState('user', new User(data))
         draw()
