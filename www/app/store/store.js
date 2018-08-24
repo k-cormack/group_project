@@ -7,6 +7,12 @@ import Upvote from "../models/Upvote.js"
 
 let appStore
 
+//@ts-ignore
+let userApi = axios.create({
+  baseURL: "localhost:3000/auth",
+  timeout: 3000
+})
+
 let state = {
   user: {},
   activePost: {},
@@ -27,6 +33,15 @@ export default class Store {
       return appStore
     }
     appStore = this
+  }
+
+  login(creds, draw) {
+    userApi.post('/login', creds)
+      .then(data => {
+        setState('user', new User(data))
+        draw()
+      })
+      .catch(console.error)
   }
 
   get state() {
