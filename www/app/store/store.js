@@ -42,9 +42,9 @@ function setState(prop, data) {
 export default class Store {
 
   register(creds, draw) {
-    userApi.create('/register/', creds)
+    userApi.post('/register/', creds)
       .then(data => {
-        setState('user', new User(data))
+        setState('register', new User(data))
         draw()
       })
       .catch(console.error)
