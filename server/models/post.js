@@ -26,13 +26,14 @@ let schema = new Schema({
         textInput: { type: String, default: '' }
     },
     userId: {
-        type: String,
+        type: ObjectId,
+        ref: 'User',
         required: true
     },
     timeStamp: {
         type: String,
         required: true,
-        default: Date.now
+        default: Date.now()
     },
     comments: {
         type: Array
