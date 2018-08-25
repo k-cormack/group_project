@@ -15,6 +15,12 @@ function drawPostList() {
             <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.drawPostDetails(${post._id})"></i><p>
             <p>${post.content.textInput}<p>
             <p>Comments: ${post.comments.length}<p>
+            <div>
+            <form onsubmit="app.controllers.comment.createComment(event)">
+              <input type="text" name="comment" placeholder="Enter your opinion here">
+            </form>
+            <button>Post Comment</button>
+          </div>
             <hr />        
         `
     })
