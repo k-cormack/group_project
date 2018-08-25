@@ -3,10 +3,8 @@ export default class Comment {
     this._id = data._id
     this.userId = data.userId
     this.postId = data.postId
-    this.timeStamp = data.timeStamp
-    this.content = data.content
-    this.upvotes = data.upvotes
-    this.downvotes = data.downvotes
-    this.voteScore = data.voteScore
+    this.timeStamp = data.timeStamp || Date.now()
+    this.content = data.content //from form
+    this.votes = data.votes || []
   }
 }

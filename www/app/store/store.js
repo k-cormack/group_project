@@ -99,6 +99,13 @@ export default class Store {
 
       })
   }
+  createComment(newComment, draw) {
+    commentApi.post('', newComment)
+      .then(data => {
+        console.log(data)
+
+      })
+  }
 
   get state() {
     return { ...state }
