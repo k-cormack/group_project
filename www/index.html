@@ -28,16 +28,21 @@
             <input type="text" name="userName" placeholder="Desired User Name">
             <input type="password" name="password" placeholder="Password">
             <button type="submit">Register</button>
+          </form>
         </div>
       </div>
       <div id="new-post" class="mt-5 row">
 
 
       </div>
-      <hr />
       <div class="mt-5 row">
         <div id="post-list" class="col-12">
-
+          <div>
+            <form onsubmit="app.controllers.comment.createComment(event)">
+              <input type="text" name="comment" placeholder="Enter your crappy opinion here">
+            </form>
+            <button>Post Comment</button>
+          </div>
         </div>
 
       </div>
