@@ -8,7 +8,10 @@ function draw() {
   userLogin.innerHTML =
     `
   <h1>Hello, ${store.state.user.username}</h1>
-  <button onclick="app.controllers.post.getPosts()" class="btn-btn-primary">See Posts!</button>
+  <button onclick="app.controllers.post.getPosts()" class="btn btn-primary">See Posts!</button>
+  <form onsubmit="app.controllers.post.createPost(event)>
+    <input type="text" name="description" placeholder="New post here" />
+  <button type="submit" class="btn btn-primary>Submit Post</button>
   `
 }
 
