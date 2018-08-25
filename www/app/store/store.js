@@ -39,6 +39,8 @@ function setState(prop, data) {
   console.log('state: ', state)
 }
 
+let post = new Post()
+
 export default class Store {
 
   register(creds, draw) {
@@ -75,6 +77,14 @@ export default class Store {
         console.log(data)
         setState('comments', data.map(comment => new Comment(comment)))
       })
+  }
+
+  createPost(newPost, draw) {
+    postApi.create()
+    .then(data => {
+      console.log(data)
+      
+    })     
   }
 
   get state() {

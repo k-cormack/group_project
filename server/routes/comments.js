@@ -23,6 +23,8 @@ router.put('/:id', (req, res, next) => {
     }))
     .catch(next)
 })
+
+
 //VOTE FOR A POST UP OR DOWN OR 0 (for Comments)
 router.put('/:id/vote', (req, res, next) => {
   Comments.findById(req.params.id)
@@ -46,4 +48,6 @@ router.delete('/:id', (req, res, next) => {
       message: 'Comment Deleted'
     })).catch(next)
 })
+
+
 module.exports = router

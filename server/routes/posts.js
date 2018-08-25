@@ -33,6 +33,8 @@ router.put('/:id', (req, res, next) => {
         .catch(next)
 })
 //VOTE FOR A POST UP OR DOWN OR 0
+
+
 router.put('/:id/vote', (req, res, next) => {
     Posts.findById(req.params.id)
         .then((post) => {
