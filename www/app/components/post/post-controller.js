@@ -12,7 +12,7 @@ function drawPostList() {
     let template = ''
     store.state.posts.forEach(post => {
         template += `
-            <p><strong>${post.title} &nbsp </strong> <i class="fas fa-plus-square" onclick="app.controllers.post.drawPostDetails(${post._id})"></i><p>
+            <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.drawPostDetails(${post._id})"></i><p>
             <p>${post.content.textInput}<p>
             <p>Comments: ${post.comments.length}<p>
             <hr />        
