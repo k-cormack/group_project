@@ -14,10 +14,11 @@ export default class CommentController {
     store.getComments()
   }
   createComment(e) {
+    e.preventDefault()
     let newComment = {
       userId: store.state.user.user._id,
-      title: e.target.title.value,
-      content: e.target.textInput.value
+      content: e.target.comment.value,
+      postId: store.state.activePost
     }
     store.createComment(newComment, drawCommentsList)
   }
