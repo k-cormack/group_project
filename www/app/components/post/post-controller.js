@@ -19,7 +19,7 @@ function drawPostList() {
             <form onsubmit="app.controllers.comment.createComment(event)">
               <input type="text" name="comment" placeholder="Enter your opinion here">
             </form>
-            <button>Post Comment</button>
+            <button type="submit">Post Comment</button>
           </div>
             <hr />        
         `
