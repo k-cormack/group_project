@@ -115,4 +115,12 @@ export default class Store {
   get state() {
     return { ...state }
   }
+
+  setActivePost(postID, draw) {
+    let myPost = state.posts.find(post => {
+      return post._id == postID
+    })
+    setState('activePost', myPost)
+    draw()
+  }
 }
