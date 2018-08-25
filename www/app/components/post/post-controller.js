@@ -10,14 +10,18 @@ function drawPostList() {
     console.log('drawn post list')
 }
 
+function drawComment() {
+    console.log("drawing comment")
+}
+
 export default class PostController {
     getPosts() {
         store.getPosts(drawPostList)
-        store.getComments()
     }
     createPost(e) {
+        e.preventDefault()
         let newPost = {
-            userId: store.state.user.user._id,
+            userId: store.state.user._id,
             title: e.target.title.value,
             content: {
                 imgUrl: e.target.imgUrl.value,
@@ -26,7 +30,11 @@ export default class PostController {
             }
         }
         store.createPost(newPost, drawPostList)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 427411b79bfddb6da568725f52e305a278b1a1d0
     }
+
 
 }

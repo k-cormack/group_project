@@ -6,6 +6,7 @@ export default class Post {
     // this.description = data.description
     this.content = data.content
     this.userId = data.userId
+    this.userName = data.userName
     this.timestamp = data.timestamp || Date.now()
     this.comments = data.comments || []
     this.votes = data.votes || []

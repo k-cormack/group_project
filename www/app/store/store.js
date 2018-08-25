@@ -15,13 +15,13 @@ let userApi = axios.create({
 
 // @ts-ignore
 let postApi = axios.create({
-  baseURL: "//localhost:3000/api/posts/",
+  baseURL: "//localhost:3000/api/posts",
   timeout: 3000
 })
 
 // @ts-ignore
 let commentApi = axios.create({
-  baseURL: "//localhost:3000/api/comments/",
+  baseURL: "//localhost:3000/api/comments",
   timeout: 3000
 })
 
@@ -39,6 +39,18 @@ function setState(prop, data) {
   console.log('state: ', state)
 }
 
+function getPostComments() {
+  state.posts.forEach(post => {
+    postApi.get(`/by-post/${post._id}`)
+      .then(data => {
+        console.log(data)
+        post.comments = data.data.map(comment => new Comment(comment))
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+  })
+}
 
 
 export default class Store {
@@ -67,6 +79,7 @@ export default class Store {
       .then(data => {
         console.log('get posts: ', data)
         setState('posts', data.map(post => new Post(post)))
+        getPostComments()
         drawPosts()
       })
   }
@@ -85,6 +98,7 @@ export default class Store {
         console.log(data)
 
       })
+<<<<<<< HEAD
   }
   createComment(newComment, draw) {
     commentApi.post('', newComment)
@@ -92,6 +106,8 @@ export default class Store {
         console.log(data)
 
       })
+=======
+>>>>>>> 427411b79bfddb6da568725f52e305a278b1a1d0
   }
 
   get state() {
