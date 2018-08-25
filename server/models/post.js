@@ -7,7 +7,7 @@ let schemaName = 'Post'
 
 
 let voteSchema = new Schema({
-    userId: { type: ObjectId, ref: 'User', required: true, unique: true },
+    userId: { type: ObjectId, ref: 'User', required: true },
     value: { type: Number, min: -1, max: 1, required: true }
 })
 

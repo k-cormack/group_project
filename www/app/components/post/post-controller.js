@@ -2,7 +2,7 @@ import Store from "../../store/store.js";
 
 let store = new Store()
 let postList = document.getElementById("post-list")
-let postDetail = document.getElementById("post-detail")
+// let postDetail = document.getElementById("post-detail")
 
 let open = {}
 
@@ -18,9 +18,23 @@ function drawPostDetail() {
             <img src="${post.content.imgUrl}" height="150"/>
         </div>
         <h5>${post.content.textInput}</h5>
+        <div>
+            <i class="fa fa-arrow-up" onclick="app.controllers.post.vote(1)"> </i>
+           <div> ${post.votes.length}</div>
+            <i class="fa fa-arrow-down" onclick="app.controllers.post.vote(-1)"> </i>
+        </div>
+        <div id="comments-${post._id}">
+        </div>
+        <div>
+            <form onsubmit="app.controllers.post.createComment(event)">
+            <input type="text" name="comment" placeholder="Enter your opinion here">
+            <button type="submit">Post Comment</button>
+            </form>
+        </div>
         `
-        drawCommentsList()
         document.getElementById(`post-${post._id}`).innerHTML = template
+        drawCommentsList()
+
     }
     else {
         open[post._id] = false
@@ -44,13 +58,10 @@ function drawCommentsList() {
     let template = ''
     post.comments.forEach(c => {
         template += `
-
+            <p>${c.content}</p>
         `
     })
-}
-
-function drawComment() {
-    console.log("drawing comment")
+    elem.innerHTML = template
 }
 
 export default class PostController {
@@ -86,6 +97,16 @@ export default class PostController {
         }
         store.createComment(newComment, drawCommentsList)
         e.target.reset()
+    }
+
+    vote(value) {
+        let voteNumber = parseInt(value)
+        let newVote = {
+            userId: store.state.user._id,
+            value: voteNumber,
+            // username: store.state.user.userName
+        }
+        store.vote(newVote, drawPostDetail)
     }
 
 

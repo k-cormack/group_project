@@ -29,9 +29,7 @@ let state = {
   user: {},
   activePost: {},
   posts: [],
-  comments: [],
-  upvotes: [],
-  downvotes: []
+  votes: []
 }
 
 function setState(prop, data) {
@@ -126,6 +124,19 @@ export default class Store {
     })
     setState('activePost', myPost)
     console.log("active post: ", state.activePost)
+    draw()
+  }
+
+  vote(newVote, draw) {
+    let vote = new Vote(newVote)
+    state.activePost.votes.push(vote)
+    postApi.put(`/${state.activePost._id}/vote`, newVote)
+      .then(data => {
+        console.log(data.data.message)
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
     draw()
   }
 }
