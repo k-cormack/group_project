@@ -19,8 +19,9 @@ export default class PostController {
         store.getPosts(drawPostList)
     }
     createPost(e) {
+        e.preventDefault()
         let newPost = {
-            userId: store.state.user.user._id,
+            userId: store.state.user._id,
             title: e.target.title.value,
             content: {
                 imgUrl: e.target.imgUrl.value,
