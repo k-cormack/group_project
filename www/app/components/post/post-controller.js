@@ -4,18 +4,28 @@ let store = new Store()
 let postList = document.getElementById("post-list")
 let postDetail = document.getElementById("post-detail")
 
+let open = {}
+
 function drawPostDetail() {
     let post = store.state.activePost
-    let template = `
-    <h3>${post.title}</h3>
-    <h5>${post.userName}</h5>
-    <div>
-        <img src="${post.content.imgUrl}" height="150"/>
-    </div>
-
-    
-    `
-
+    if (!open[post._id]) {
+        open[post._id] = true
+        let template = `
+        <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.setActivePost('${post._id}')"></i><p>
+        <h3>${post.title}</h3>
+        <h5>${post.userName}</h5>
+        <div>
+            <img src="${post.content.imgUrl}" height="150"/>
+        </div>
+        <h5>${post.content.textInput}</h5>
+        `
+        drawCommentsList()
+        document.getElementById(`post-${post._id}`).innerHTML = template
+    }
+    else {
+        open[post._id] = false
+        document.getElementById(`post-${post._id}`).innerHTML = post.basicDraw
+    }
 
     console.log('drawn details!')
 }
@@ -23,25 +33,20 @@ function drawPostDetail() {
 function drawPostList() {
     let template = ''
     store.state.posts.forEach(post => {
-        template += `
-            <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.setActivePost('${post._id}')"></i><p>
-            <p>${post.content.textInput}<p>
-            <p>Comments: ${post.comments.length}<p>
-            <div>
-            <form onsubmit="app.controllers.post.createComment(event)">
-              <input type="text" name="comment" placeholder="Enter your opinion here">
-              <button type="submit">Post Comment</button>
-            </form>
-          </div>
-            <hr />        
-        `
+        template += post.basicDraw
     })
     postList.innerHTML = template
 }
 
 function drawCommentsList() {
-    console.log('drawn comment list')
-    drawPostList()
+    let post = store.state.activePost
+    let elem = document.getElementById('comments-' + post._id)
+    let template = ''
+    post.comments.forEach(c => {
+        template += `
+
+        `
+    })
 }
 
 function drawComment() {
