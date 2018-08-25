@@ -16,10 +16,10 @@ let schema = new Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String,
-        default: 'No Description Available'
-    },
+    // description: {
+    //     type: String,
+    //     default: 'No Description Available'
+    // },
     content: {
         imgUrl: { type: String, default: '' },
         vidUrl: { type: String, default: '' },
@@ -41,5 +41,6 @@ let schema = new Schema({
 
     votes: [voteSchema]
 })
+
 
 module.exports = mongoose.model(schemaName, schema)
