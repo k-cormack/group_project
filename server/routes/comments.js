@@ -12,7 +12,7 @@ router.get('/by-post/:postId', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   Comments.create(req.body)
-    .then((newComment) => res.send(newComment))
+    .then(newComment => res.send(newComment))
     .catch(next)
 })
 

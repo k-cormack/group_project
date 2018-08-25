@@ -2,9 +2,7 @@ import Store from "../../store/store.js";
 
 let store = new Store()
 
-function drawCommentDetail() {
-  console.log('drawn Comment details!')
-}
+
 function drawCommentsList() {
   console.log('drawn comment list')
 }
@@ -21,7 +19,6 @@ export default class CommentController {
       content: e.target.comment.value
     }
     store.createComment(newComment, drawCommentsList)
-    e.resetDefault()
   }
 }
 
