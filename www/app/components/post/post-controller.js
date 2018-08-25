@@ -12,7 +12,7 @@ function drawPostList() {
     let template = ''
     store.state.posts.forEach(post => {
         template += `
-            <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.drawPostDetails(${post._id})"></i><p>
+            <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.setActivePost(${post._id})"></i><p>
             <p>${post.content.textInput}<p>
             <p>Comments: ${post.comments.length}<p>
             <div>
@@ -49,11 +49,8 @@ export default class PostController {
         store.createPost(newPost, drawPostList)
     }
 
-    drawPostDetails(postID) {
-        let myPost = store.state.posts.find(post => {
-            return post._id == postID
-        })
-        drawPostDetail(myPost)
+    setActivePost(postID) {
+        store.setActivePost(postID, drawPostDetail)
     }
 
 
