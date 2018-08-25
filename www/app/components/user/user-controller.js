@@ -7,11 +7,8 @@ let userLogin = document.getElementById('user')
 function draw() {
   userLogin.innerHTML =
     `
-  <h1>Hello, ${store.state.user.username}</h1>
-  <button onclick="app.controllers.post.getPosts()" class="btn btn-primary">See Posts!</button>
-  <form onsubmit="app.controllers.post.createPost(event)>
-    <input type="text" name="description" placeholder="New post here" />
-  <button type="submit" class="btn btn-primary>Submit Post</button>
+  <h1>Hello, ${store.state.user.userName}</h1>
+  <button onclick="app.controllers.post.getPosts()" class="btn-btn-primary">See Posts!</button>
   `
 }
 
@@ -21,7 +18,7 @@ export default class UserController {
   login(e) {
     e.preventDefault()
     let creds = {
-      username: e.target.username.value,
+      userName: e.target.userName.value,
       password: e.target.password.value
     }
     store.login(creds, draw)
@@ -30,7 +27,7 @@ export default class UserController {
   register(e) {
     e.preventDefault()
     let creds = {
-      username: e.target.username.value,
+      userName: e.target.userName.value,
       password: e.target.password.value
     }
     store.register(creds, draw)
