@@ -39,7 +39,7 @@ function setState(prop, data) {
   console.log('state: ', state)
 }
 
-let post = new Post()
+
 
 export default class Store {
 
