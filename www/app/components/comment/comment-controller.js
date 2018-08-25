@@ -17,8 +17,8 @@ export default class CommentController {
     e.preventDefault()
     let newComment = {
       userId: store.state.user.user._id,
-      content: e.target.comment.value,
-      // postId: store.state.activePost
+      postId: store.state.activePost._id,
+      content: e.target.comment.value
     }
     store.createComment(newComment, drawCommentsList)
   }

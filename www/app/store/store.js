@@ -100,10 +100,15 @@ export default class Store {
       })
   }
   createComment(newComment, draw) {
-    commentApi.post('', newComment)
+    commentApi.post('/', newComment)
       .then(data => {
         console.log(data)
-
+        let comment = new Comment(data.data)
+        state.activePost.comments.push(comment)
+        draw()
+      })
+      .catch(err => {
+        console.log(err.message)
       })
   }
 
