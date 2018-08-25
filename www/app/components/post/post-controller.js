@@ -20,7 +20,9 @@ function drawPostDetail() {
         <h5>${post.content.textInput}</h5>
         <div>
             <i class="fa fa-arrow-up" onclick="app.controllers.post.vote(1)"> </i>
-           <div> ${post.votes.length}</div>
+           <div id="score-${post._id}"> 
+           
+           </div>
             <i class="fa fa-arrow-down" onclick="app.controllers.post.vote(-1)"> </i>
         </div>
         <div id="comments-${post._id}">
@@ -34,6 +36,7 @@ function drawPostDetail() {
         `
         document.getElementById(`post-${post._id}`).innerHTML = template
         drawCommentsList()
+        drawVoteScore()
 
     }
     else {
@@ -62,6 +65,16 @@ function drawCommentsList() {
         `
     })
     elem.innerHTML = template
+}
+
+function drawVoteScore() {
+    let post = store.state.activePost
+    let elem = document.getElementById('score-' + post._id)
+    let sum = 0
+    post.votes.forEach(vote => {
+        return sum += vote.value
+    })
+    elem.innerHTML = `<strong>${sum}</strong>`
 }
 
 export default class PostController {
@@ -101,12 +114,17 @@ export default class PostController {
 
     vote(value) {
         let voteNumber = parseInt(value)
+        let prevVote = store.state.activePost.votes.find(vote => {
+            return vote.userId == store.state.user._id
+        })
+        if (prevVote && prevVote.value == voteNumber) {
+            voteNumber = 0;
+        }
         let newVote = {
             userId: store.state.user._id,
-            value: voteNumber,
-            // username: store.state.user.userName
+            value: voteNumber
         }
-        store.vote(newVote, drawPostDetail)
+        store.vote(newVote, drawVoteScore)
     }
 
 

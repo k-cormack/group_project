@@ -46,7 +46,7 @@ router.put('/:id/vote', (req, res, next) => {
             }
             return post.save()
         })
-        .then(() => res.send({ message: "Thanks for the vote" }))
+        .then(post => res.send(post))
         .catch(next)
 })
 

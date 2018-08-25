@@ -128,15 +128,17 @@ export default class Store {
   }
 
   vote(newVote, draw) {
-    let vote = new Vote(newVote)
-    state.activePost.votes.push(vote)
     postApi.put(`/${state.activePost._id}/vote`, newVote)
       .then(data => {
-        console.log(data.data.message)
+        console.log("new vote: ", data.data)
+        //setState('activePost', data.data)
+        state.activePost.votes = data.data.votes.map(v => new Vote(v))
+        debugger
+        draw()
       })
       .catch(err => {
         console.log(err.message)
       })
-    draw()
+
   }
 }
