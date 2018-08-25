@@ -100,7 +100,7 @@ export default class Store {
       })
   }
   createComment(newComment, draw) {
-    commentApi.post('/', newComment)
+    commentApi.post('', newComment)
       .then(data => {
         console.log(data)
         let comment = new Comment(data.data)
@@ -121,6 +121,7 @@ export default class Store {
       return post._id == postID
     })
     setState('activePost', myPost)
+    console.log("active post: ", state.activePost)
     draw()
   }
 }

@@ -12,11 +12,11 @@ function drawPostList() {
     let template = ''
     store.state.posts.forEach(post => {
         template += `
-            <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.setActivePost(${post._id})"></i><p>
+            <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.setActivePost('${post._id}')"></i><p>
             <p>${post.content.textInput}<p>
             <p>Comments: ${post.comments.length}<p>
             <div>
-            <form onsubmit="app.controllers.comment.createComment(event)">
+            <form onsubmit="app.controllers.post.createComment(event)">
               <input type="text" name="comment" placeholder="Enter your opinion here">
               <button type="submit">Post Comment</button>
             </form>
@@ -25,6 +25,10 @@ function drawPostList() {
         `
     })
     postList.innerHTML = template
+}
+
+function drawCommentsList() {
+    console.log('drawn comment list')
 }
 
 function drawComment() {
@@ -47,11 +51,22 @@ export default class PostController {
             }
         }
         store.createPost(newPost, drawPostList)
-        e.resetDefault()
+        e.target.resetDefault()
     }
 
     setActivePost(postID) {
+        console.log("PC set active post: ", postID)
         store.setActivePost(postID, drawPostDetail)
+    }
+
+    createComment(e) {
+        e.preventDefault()
+        let newComment = {
+            userId: store.state.user._id,
+            postId: store.state.activePost._id,
+            content: e.target.comment.value
+        }
+        store.createComment(newComment, drawCommentsList)
     }
 
 
