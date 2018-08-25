@@ -39,6 +39,18 @@ function setState(prop, data) {
   console.log('state: ', state)
 }
 
+function getPostComments() {
+  state.posts.forEach(post => {
+    postApi.get(`/by-post/${post._id}`)
+      .then(data => {
+        console.log(data)
+        post.comments = data.data.map(comment => new Comment(comment))
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+  })
+}
 
 
 export default class Store {
@@ -67,6 +79,7 @@ export default class Store {
       .then(data => {
         console.log('get posts: ', data)
         setState('posts', data.map(post => new Post(post)))
+        getPostComments()
         drawPosts()
       })
   }
@@ -81,10 +94,10 @@ export default class Store {
 
   createPost(newPost, draw) {
     postApi.post('', newPost)
-    .then(data => {
-      console.log(data)
-      
-    })     
+      .then(data => {
+        console.log(data)
+
+      })
   }
 
   get state() {

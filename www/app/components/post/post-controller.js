@@ -10,10 +10,13 @@ function drawPostList() {
     console.log('drawn list')
 }
 
+function drawComment() {
+    console.log("drawing comment")
+}
+
 export default class PostController {
     getPosts() {
         store.getPosts(drawPostList)
-        store.getComments()
     }
     createPost(e) {
         let newPost = {
@@ -26,7 +29,7 @@ export default class PostController {
             }
         }
         store.createPost(newPost, drawPostList)
-    
     }
+
 
 }

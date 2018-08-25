@@ -4,7 +4,7 @@ let Comments = require('../models/comment')
 
 router.get('/by-post/:postId', (req, res, next) => {
   Comments.find({
-    userId: req.params.postId
+    postId: req.params.postId
   }).then(commentList => {
     res.send(commentList)
   }).catch(next)
