@@ -21,6 +21,7 @@ export default class CommentController {
       content: e.target.comment.value
     }
     store.createComment(newComment, drawCommentsList)
+    e.resetDefault()
   }
 }
 

@@ -47,6 +47,7 @@ export default class PostController {
             }
         }
         store.createPost(newPost, drawPostList)
+        e.resetDefault()
     }
 
     setActivePost(postID) {
