@@ -41,7 +41,7 @@ function setState(prop, data) {
 
 function getPostComments() {
   state.posts.forEach(post => {
-    postApi.get(`/by-post/${post._id}`)
+    commentApi.get(`/by-post/${post._id}`)
       .then(data => {
         console.log(data)
         post.comments = data.data.map(comment => new Comment(comment))
@@ -78,7 +78,7 @@ export default class Store {
     postApi.get()
       .then(data => {
         console.log('get posts: ', data)
-        setState('posts', data.map(post => new Post(post)))
+        setState('posts', data.data.map(post => new Post(post)))
         getPostComments()
         drawPosts()
       })

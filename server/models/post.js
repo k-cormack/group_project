@@ -16,10 +16,6 @@ let schema = new Schema({
         type: String,
         required: true
     },
-    // description: {
-    //     type: String,
-    //     default: 'No Description Available'
-    // },
     content: {
         imgUrl: { type: String, default: '' },
         vidUrl: { type: String, default: '' },
