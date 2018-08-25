@@ -80,7 +80,7 @@ export default class Store {
   }
 
   createPost(newPost, draw) {
-    postApi.create()
+    postApi.post('', newPost)
     .then(data => {
       console.log(data)
       
