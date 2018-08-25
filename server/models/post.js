@@ -34,6 +34,10 @@ let schema = new Schema({
     comments: {
         type: Array
     },
+    userName: {
+        type: String,
+        required: true
+    },
 
     votes: [voteSchema]
 })
