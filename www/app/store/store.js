@@ -98,16 +98,6 @@ export default class Store {
         console.log(data)
 
       })
-<<<<<<< HEAD
-  }
-  createComment(newComment, draw) {
-    commentApi.post('', newComment)
-      .then(data => {
-        console.log(data)
-
-      })
-=======
->>>>>>> 427411b79bfddb6da568725f52e305a278b1a1d0
   }
 
   get state() {

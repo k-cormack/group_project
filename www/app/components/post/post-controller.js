@@ -30,10 +30,6 @@ export default class PostController {
             }
         }
         store.createPost(newPost, drawPostList)
-<<<<<<< HEAD
-
-=======
->>>>>>> 427411b79bfddb6da568725f52e305a278b1a1d0
     }
 
 
