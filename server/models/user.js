@@ -6,7 +6,7 @@ let ObjectId = Schema.Types.ObjectId
 let schemaName = 'User'
 
 let schema = new Schema({
-    username: {
+    userName: {
         type: String,
         required: true,
         unique: true

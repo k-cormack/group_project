@@ -5,7 +5,7 @@ let Users = require('../models/user')
 
 router.post('/login', (req, res, next) => {
     Users.findOne({
-        username: req.body.username,
+        userName: req.body.userName,
         password: req.body.password
     })
         .then(user => {
