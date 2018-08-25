@@ -3,14 +3,13 @@
 let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId;
-let schemaName = 'Comment'
+let schemaName = 'PostComment'
 
 let voteSchema = new Schema({
   userId: {
     type: ObjectId,
     ref: 'User',
-    required: true,
-    unique: true
+    required: true
   },
   value: {
     type: Number,
