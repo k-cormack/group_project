@@ -3,11 +3,11 @@ import Store from "../../store/store.js";
 let store = new Store()
 
 function drawPostDetail() {
-    console.log('drawn details!')
+    console.log('drawn Post details!')
 }
 
 function drawPostList() {
-    console.log('drawn list')
+    console.log('drawn post list')
 }
 
 export default class PostController {
@@ -26,7 +26,7 @@ export default class PostController {
             }
         }
         store.createPost(newPost, drawPostList)
-    
+
     }
 
 }

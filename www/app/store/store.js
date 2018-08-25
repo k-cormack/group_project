@@ -81,10 +81,17 @@ export default class Store {
 
   createPost(newPost, draw) {
     postApi.post('', newPost)
-    .then(data => {
-      console.log(data)
-      
-    })     
+      .then(data => {
+        console.log(data)
+
+      })
+  }
+  createComment(newComment, draw) {
+    commentApi.post('', newComment)
+      .then(data => {
+        console.log(data)
+
+      })
   }
 
   get state() {
