@@ -18,7 +18,6 @@ let schema = new Schema({
     },
     content: {
         imgUrl: { type: String, default: '' },
-        vidUrl: { type: String, default: '' },
         textInput: { type: String, default: '' }
     },
     userId: {

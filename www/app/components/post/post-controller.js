@@ -4,7 +4,19 @@ let store = new Store()
 let postList = document.getElementById("post-list")
 let postDetail = document.getElementById("post-detail")
 
-function drawPostDetail(post) {
+function drawPostDetail() {
+    let post = store.state.activePost
+    let template = `
+    <h3>${post.title}</h3>
+    <h5>${post.userName}</h5>
+    <div>
+        <img src="${post.content.imgUrl}" height="150"/>
+    </div>
+
+    
+    `
+
+
     console.log('drawn details!')
 }
 
@@ -29,6 +41,7 @@ function drawPostList() {
 
 function drawCommentsList() {
     console.log('drawn comment list')
+    drawPostList()
 }
 
 function drawComment() {
@@ -43,15 +56,15 @@ export default class PostController {
         e.preventDefault()
         let newPost = {
             userId: store.state.user._id,
+            userName: store.state.user.userName,
             title: e.target.title.value,
             content: {
                 imgUrl: e.target.imgUrl.value,
-                vidUrl: e.target.vidUrl.value,
                 textInput: e.target.textInput.value
             }
         }
         store.createPost(newPost, drawPostList)
-        e.target.resetDefault()
+        e.target.reset()
     }
 
     setActivePost(postID) {
@@ -67,6 +80,7 @@ export default class PostController {
             content: e.target.comment.value
         }
         store.createComment(newComment, drawCommentsList)
+        e.target.reset()
     }
 
 

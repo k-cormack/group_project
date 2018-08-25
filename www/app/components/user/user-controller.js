@@ -12,10 +12,9 @@ function draw() {
   `
   document.getElementById("new-post").innerHTML = `
     <form onsubmit="app.controllers.post.createPost(event)">
-      <input type="text" name="title" placeholder="Post Title here" />
-      <input type="text" name="textInput" placeholder="Enter comments here" />
-      <input type="url" name="imgUrl" placeholder="Image URL here" />
-      <input type="url" name="vidUrl" placeholder="Video URL here" />
+      <input type="text" name="title" placeholder="Post Title here" autocomplete="off"/>
+      <input type="text" name="textInput" placeholder="Enter comments here" autocomplete="off" />
+      <input type="url" name="imgUrl" placeholder="Image URL here" autocomplete="off"/>      
       <button type="submit" class="btn btn-primary">Submit Post</button>
     </form> 
   `
