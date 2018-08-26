@@ -14,6 +14,7 @@ function drawPostDetail() {
         <p><strong>${post.title} &nbsp </strong> <i class="fa fa-plus-square" onclick="app.controllers.post.setActivePost('${post._id}')"></i><p>
         <h3>${post.title}</h3>
         <h5>${post.userName}</h5>
+        <button class="btn-btn-primary" onclick="app.controllers.post.deletePost()">Delete Post</button>
         <div>
             <img src="${post.content.imgUrl}" height="150"/>
         </div>
@@ -61,7 +62,7 @@ function drawCommentsList() {
     let template = ''
     post.comments.forEach(c => {
         template += `
-            <p>${c.content}</p>
+            <div><p>${c.content}</p></div>
         `
     })
     elem.innerHTML = template
@@ -125,6 +126,10 @@ export default class PostController {
             value: voteNumber
         }
         store.vote(newVote, drawVoteScore)
+    }
+
+    deletePost() {
+        store.deletePost(drawPostList)
     }
 
 

@@ -4,7 +4,7 @@ import Post from "../models/Post.js"
 import Comment from "../models/Comment.js"
 import Vote from "../models/Vote.js"
 
-
+//singleton store
 let appStore
 
 //@ts-ignore
@@ -53,6 +53,10 @@ function getPostComments(drawPosts) {
 
 
 export default class Store {
+
+  get state() {
+    return { ...state }
+  }
 
   register(creds, draw) {
     userApi.post('/register', creds)
@@ -114,9 +118,7 @@ export default class Store {
       })
   }
 
-  get state() {
-    return { ...state }
-  }
+
 
   setActivePost(postID, draw) {
     let myPost = state.posts.find(post => {
@@ -139,6 +141,20 @@ export default class Store {
       .catch(err => {
         console.log(err.message)
       })
+  }
+
+  deletePost(draw) {
+    if (state.activePost.userId != state.user._id) { return }
+    postApi.delete(`/${state.activePost._id}`)
+      .then(res => {
+        console.log(res)
+        this.getPosts(draw)
+      })
+      .catch(err => console.error(err.message))
 
   }
+
+
+
+
 }
