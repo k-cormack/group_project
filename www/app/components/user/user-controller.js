@@ -7,8 +7,8 @@ let userLogin = document.getElementById('user')
 function draw() {
   userLogin.innerHTML =
     `
-  <h1>Hello, ${store.state.user.userName}</h1>
-  <button onclick="app.controllers.post.getPosts()" class="btn btn-primary">View Posts</button>
+  <h1>Hello, ${store.state.user.userName}</h1>&nbsp
+  <button onclick="app.controllers.post.getPosts()" class="btn btn-primary">View Posts</button>&nbsp
   <button onclick="app.controllers.post.sortPosts()" class="btn btn-primary">Sort Posts</button>
   `
   document.getElementById("new-post").innerHTML = `

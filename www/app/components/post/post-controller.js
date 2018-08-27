@@ -72,19 +72,19 @@ function drawCommentsList() {
             ${c.content} &nbsp</p><button class="btn btn-primary" 
             onclick="app.controllers.post.deleteComment('${c._id}')">Delete Comment</button></div>
         `
-
+        console.log("drawing comments:", c)
         //drawVoteScore(c)
     })
     elem.innerHTML = template
 }
 
 //draw current voteScore
-function drawVoteScore(updatedObj) {
+function drawVoteScore(postcomment) {
     // let post = store.state.activePost    
-    let elem = document.getElementById('score-' + updatedObj._id)
+    let elem = document.getElementById('score-' + postcomment._id)
 
     let sum = 0
-    updatedObj.votes.forEach(vote => {
+    postcomment.votes.forEach(vote => {
         return sum += vote.value
     })
     elem.innerHTML = `<strong>${sum}</strong>`
@@ -181,6 +181,7 @@ export default class PostController {
     //upvote or downvote a comment
     voteComment(value, commentId) {
         let voteNumber = parseInt(value)
+        console.log("receiving vote: ", voteNumber)
         //find comment object
         let comment = store.state.activePost.comments.find(c => {
             return c._id == commentId
@@ -190,7 +191,7 @@ export default class PostController {
         let prevVote = comment.votes.find(vote => {
             return vote.userId == store.state.user._id
         })
-
+        console.log("prev vote found: ", prevVote)
         //if user has previously voted the same value, set it to 0
         if (prevVote && prevVote.value == voteNumber) {
             voteNumber = 0;

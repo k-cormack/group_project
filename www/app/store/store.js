@@ -102,13 +102,7 @@ export default class Store {
       })
   }
 
-  // getComments() {
-  //   commentApi.get()
-  //     .then(data => {
-  //       console.log(data)
-  //       setState('comments', data.map(comment => new Comment(comment)))
-  //     })
-  // }
+
 
   //create new post
   createPost(newPost, draw) {
@@ -193,11 +187,14 @@ export default class Store {
 
   //up or down vote a comment
   voteComment(newVote, commentId, draw) {
+    console.log("sending vote value: ", newVote.value)
+    let comment = state.activePost.comments.find(c => {
+      return c._id == commentId
+    })
     commentApi.put(`/${commentId}/vote`, newVote)
       .then(res => {
         console.log("new vote: ", res.data)
-        let comment = res.data
-        state.activePost.votes = comment.votes.map(v => new Vote(v))
+        comment.votes = res.data.votes.map(v => new Vote(v))
         draw(comment)
       })
       .catch(err => {
