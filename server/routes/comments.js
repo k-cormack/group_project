@@ -42,7 +42,7 @@ router.put('/:id/vote', (req, res, next) => {
       }
       return comment.save()
     })
-    .then(() => res.send({ message: "Thanks for the vote on this comment" }))
+    .then(comment => res.send(comment))
     .catch(next)
 })
 

@@ -32,12 +32,14 @@ let state = {
   votes: []
 }
 
+//update state properties
 function setState(prop, data) {
   state[prop] = data
   console.log('state: ', state)
 }
 
-function getPostComments(drawPosts) {
+//get all comments
+function getComments(drawPosts) {
   state.posts.forEach(post => {
     commentApi.get(`/by-post/${post._id}`)
       .then(data => {
@@ -51,6 +53,16 @@ function getPostComments(drawPosts) {
   })
 }
 
+function getPostComments(drawPost) {
+  commentApi.get(`by-post/${state.activePost._id}`)
+    .then(res => {
+      console.log(res.data)
+      state.activePost.comments = res.data.map(comment => new Comment(comment))
+      drawPost()
+    })
+    .catch(err => console.error(err.message))
+}
+
 
 export default class Store {
 
@@ -58,6 +70,7 @@ export default class Store {
     return { ...state }
   }
 
+  //register new user
   register(creds, draw) {
     userApi.post('/register', creds)
       .then(data => {
@@ -67,6 +80,7 @@ export default class Store {
       .catch(console.error)
   }
 
+  //login authorized user
   login(creds, draw) {
     userApi.post('/login', creds)
       .then(data => {
@@ -77,24 +91,26 @@ export default class Store {
       .catch(console.error)
   }
 
+  //retrieve all posts
   getPosts(drawPosts) {
     postApi.get()
       .then(data => {
         console.log('get posts: ', data)
         setState('posts', data.data.map(post => new Post(post)))
-        getPostComments(drawPosts)
+        getComments(drawPosts)
         //drawPosts()
       })
   }
 
-  getComments() {
-    commentApi.get()
-      .then(data => {
-        console.log(data)
-        setState('comments', data.map(comment => new Comment(comment)))
-      })
-  }
+  // getComments() {
+  //   commentApi.get()
+  //     .then(data => {
+  //       console.log(data)
+  //       setState('comments', data.map(comment => new Comment(comment)))
+  //     })
+  // }
 
+  //create new post
   createPost(newPost, draw) {
     postApi.post('', newPost)
       .then(data => {
@@ -105,6 +121,49 @@ export default class Store {
       })
   }
 
+  setActivePost(postID, draw) {
+    let myPost = state.posts.find(post => {
+      return post._id == postID
+    })
+    setState('activePost', myPost)
+    console.log("active post: ", state.activePost)
+    draw()
+  }
+
+  //up or down vote a post
+  votePost(newVote, draw) {
+    postApi.put(`/${state.activePost._id}/vote`, newVote)
+      .then(res => {
+        console.log("new vote: ", res.data)
+        let post = res.data
+        state.activePost.votes = post.votes.map(v => new Vote(v))
+        draw(post)
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+  }
+
+  //delete active post
+  deletePost(draw) {
+    //user can only delete their own post
+    if (state.activePost.userId != state.user._id) { return }
+    postApi.delete(`/${state.activePost._id}`)
+      .then(res => {
+        console.log(res)
+        this.getPosts(draw)
+      })
+      .catch(err => console.error(err.message))
+
+  }
+
+  sortPosts(compare, draw) {
+    let sorted = state.posts.sort(compare)
+    setState('posts', sorted)
+    draw()
+  }
+
+  //create a new comment
   createComment(newComment, draw) {
     commentApi.post('', newComment)
       .then(data => {
@@ -118,43 +177,32 @@ export default class Store {
       })
   }
 
-
-
-  setActivePost(postID, draw) {
-    let myPost = state.posts.find(post => {
-      return post._id == postID
+  //delete a comment
+  deleteComment(commentId, draw) {
+    let comment = state.activePost.comments.find(c => {
+      return c._id = commentId
     })
-    setState('activePost', myPost)
-    console.log("active post: ", state.activePost)
-    draw()
+    if (comment.userId != state.user._id) { return }
+    commentApi.delete(`/${commentId}`)
+      .then(data => {
+        console.log(data)
+        getPostComments(draw)
+      })
+      .catch(err => console.error(err.message))
   }
 
-  vote(newVote, draw) {
-    postApi.put(`/${state.activePost._id}/vote`, newVote)
-      .then(data => {
-        console.log("new vote: ", data.data)
-        //setState('activePost', data.data)
-        state.activePost.votes = data.data.votes.map(v => new Vote(v))
-        debugger
-        draw()
+  //up or down vote a comment
+  voteComment(newVote, commentId, draw) {
+    commentApi.put(`/${commentId}/vote`, newVote)
+      .then(res => {
+        console.log("new vote: ", res.data)
+        let comment = res.data
+        state.activePost.votes = comment.votes.map(v => new Vote(v))
+        draw(comment)
       })
       .catch(err => {
         console.log(err.message)
       })
   }
-
-  deletePost(draw) {
-    if (state.activePost.userId != state.user._id) { return }
-    postApi.delete(`/${state.activePost._id}`)
-      .then(res => {
-        console.log(res)
-        this.getPosts(draw)
-      })
-      .catch(err => console.error(err.message))
-
-  }
-
-
-
 
 }

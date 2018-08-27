@@ -6,6 +6,7 @@ let postList = document.getElementById("post-list")
 
 let open = {}
 
+//draw full details for active post when selected
 function drawPostDetail() {
     let post = store.state.activePost
     if (!open[post._id]) {
@@ -20,11 +21,11 @@ function drawPostDetail() {
         </div>
         <h5>${post.content.textInput}</h5>
         <div>
-            <i class="fa fa-arrow-up" onclick="app.controllers.post.vote(1)"> </i>
+            <i class="fa fa-arrow-up" onclick="app.controllers.post.votePost(1)"> </i>
            <div id="score-${post._id}"> 
            
            </div>
-            <i class="fa fa-arrow-down" onclick="app.controllers.post.vote(-1)"> </i>
+            <i class="fa fa-arrow-down" onclick="app.controllers.post.votePost(-1)"> </i>
         </div>
         <div id="comments-${post._id}">
         </div>
@@ -36,8 +37,8 @@ function drawPostDetail() {
         </div>
         `
         document.getElementById(`post-${post._id}`).innerHTML = template
+        drawVoteScore(post)
         drawCommentsList()
-        drawVoteScore()
 
     }
     else {
@@ -48,6 +49,7 @@ function drawPostDetail() {
     console.log('drawn details!')
 }
 
+//draw list of all posts, summary version
 function drawPostList() {
     let template = ''
     store.state.posts.forEach(post => {
@@ -56,38 +58,67 @@ function drawPostList() {
     postList.innerHTML = template
 }
 
+//draw complete list of comments associate with active post
 function drawCommentsList() {
     let post = store.state.activePost
     let elem = document.getElementById('comments-' + post._id)
     let template = ''
     post.comments.forEach(c => {
         template += `
-            <div><p>${c.content}</p></div>
+            <div><p style="display: inline-block;">
+            <i class="fa fa-arrow-up" onclick="app.controllers.post.voteComment(1, '${c._id}')"> </i>
+                <span id="score-${c._id}"> </span>
+            <i class="fa fa-arrow-down" onclick="app.controllers.post.voteComment(-1, '${c._id}')"> </i>
+            ${c.content} &nbsp</p><button class="btn btn-primary" 
+            onclick="app.controllers.post.deleteComment('${c._id}')">Delete Comment</button></div>
         `
+
+        //drawVoteScore(c)
     })
     elem.innerHTML = template
 }
 
-function drawVoteScore() {
-    let post = store.state.activePost
-    let elem = document.getElementById('score-' + post._id)
+//draw current voteScore
+function drawVoteScore(updatedObj) {
+    // let post = store.state.activePost    
+    let elem = document.getElementById('score-' + updatedObj._id)
+
     let sum = 0
-    post.votes.forEach(vote => {
+    updatedObj.votes.forEach(vote => {
         return sum += vote.value
     })
     elem.innerHTML = `<strong>${sum}</strong>`
 }
 
+//sort posts by timestamp compare function
+function comparePosts(post1, post2) {
+    const time1 = post1.timestamp
+    const time2 = post2.timestamp
+    let comparison = 0
+    if (time2 > time1) {
+        comparison = 1
+    }
+    else if (time1 > time2) {
+        comparison = -1
+    }
+    return comparison
+}
+
 export default class PostController {
+
+    //get all posts
     getPosts() {
         store.getPosts(drawPostList)
     }
+
+    //create a new post
     createPost(e) {
         e.preventDefault()
         let newPost = {
             userId: store.state.user._id,
             userName: store.state.user.userName,
             title: e.target.title.value,
+            timestamp: Date.now(),
             content: {
                 imgUrl: e.target.imgUrl.value,
                 textInput: e.target.textInput.value
@@ -97,23 +128,14 @@ export default class PostController {
         e.target.reset()
     }
 
+    //set currentpost as the active post
     setActivePost(postID) {
         console.log("PC set active post: ", postID)
         store.setActivePost(postID, drawPostDetail)
     }
 
-    createComment(e) {
-        e.preventDefault()
-        let newComment = {
-            userId: store.state.user._id,
-            postId: store.state.activePost._id,
-            content: e.target.comment.value
-        }
-        store.createComment(newComment, drawCommentsList)
-        e.target.reset()
-    }
-
-    vote(value) {
+    //up or down vote a post
+    votePost(value) {
         let voteNumber = parseInt(value)
         let prevVote = store.state.activePost.votes.find(vote => {
             return vote.userId == store.state.user._id
@@ -125,12 +147,61 @@ export default class PostController {
             userId: store.state.user._id,
             value: voteNumber
         }
-        store.vote(newVote, drawVoteScore)
+        store.votePost(newVote, drawVoteScore)
     }
 
+    //delete active post
     deletePost() {
         store.deletePost(drawPostList)
     }
+
+    //sort posts by timestamp--most recent on top
+    sortPosts() {
+        store.sortPosts(comparePosts, drawPostList)
+    }
+
+    //add a new comment
+    createComment(e) {
+        e.preventDefault()
+        let newComment = {
+            userId: store.state.user._id,
+            postId: store.state.activePost._id,
+            content: e.target.comment.value,
+            timestamp: Date.now()
+        }
+        store.createComment(newComment, drawCommentsList)
+        e.target.reset()
+    }
+
+    //delete a comments
+    deleteComment(commentId) {
+        store.deleteComment(commentId, drawPostDetail)
+    }
+
+    //upvote or downvote a comment
+    voteComment(value, commentId) {
+        let voteNumber = parseInt(value)
+        //find comment object
+        let comment = store.state.activePost.comments.find(c => {
+            return c._id == commentId
+        })
+
+        //determine if user has already voted on that comment
+        let prevVote = comment.votes.find(vote => {
+            return vote.userId == store.state.user._id
+        })
+
+        //if user has previously voted the same value, set it to 0
+        if (prevVote && prevVote.value == voteNumber) {
+            voteNumber = 0;
+        }
+        let newVote = {
+            userId: store.state.user._id,
+            value: voteNumber
+        }
+        store.voteComment(newVote, commentId, drawVoteScore)
+    }
+
 
 
 }

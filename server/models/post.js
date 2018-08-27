@@ -25,10 +25,9 @@ let schema = new Schema({
         ref: 'User',
         required: true
     },
-    timeStamp: {
-        type: String,
-        required: true,
-        default: Date.now()
+    timestamp: {
+        type: Number,
+        required: true
     },
     comments: {
         type: Array

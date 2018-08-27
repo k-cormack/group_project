@@ -32,8 +32,8 @@ let schema = new Schema({
     required: true
   },
   timestamp: {
-    type: Date,
-    default: Date.now()
+    type: Number,
+    required: true
 
   },
   content: {
