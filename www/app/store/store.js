@@ -53,10 +53,10 @@ function getComments(drawPosts) {
   })
 }
 
+//gets the activePost comments to draw to screen
 function getPostComments(drawPost) {
   commentApi.get(`by-post/${state.activePost._id}`)
     .then(res => {
-      console.log(res.data)
       state.activePost.comments = res.data.map(comment => new Comment(comment))
       drawPost()
     })
@@ -84,7 +84,6 @@ export default class Store {
   login(creds, draw) {
     userApi.post('/login', creds)
       .then(data => {
-        console.log('login: ', data)
         setState('user', new User(data.data))
         draw()
       })
@@ -128,7 +127,6 @@ export default class Store {
   votePost(newVote, draw) {
     postApi.put(`/${state.activePost._id}/vote`, newVote)
       .then(res => {
-        console.log("new vote: ", res.data)
         let post = res.data
         state.activePost.votes = post.votes.map(v => new Vote(v))
         draw(post)

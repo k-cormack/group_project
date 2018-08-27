@@ -46,7 +46,6 @@ function drawPostDetail() {
         document.getElementById(`post-${post._id}`).innerHTML = post.basicDraw
     }
 
-    console.log('drawn details!')
 }
 
 //draw list of all posts, summary version
@@ -72,7 +71,6 @@ function drawCommentsList() {
             ${c.content} &nbsp</p><button class="btn btn-primary" 
             onclick="app.controllers.post.deleteComment('${c._id}')">Delete Comment</button></div>
         `
-        console.log("drawing comments:", c)
         //drawVoteScore(c)
     })
     elem.innerHTML = template
@@ -80,9 +78,7 @@ function drawCommentsList() {
 
 //draw current voteScore
 function drawVoteScore(postcomment) {
-    // let post = store.state.activePost    
     let elem = document.getElementById('score-' + postcomment._id)
-
     let sum = 0
     postcomment.votes.forEach(vote => {
         return sum += vote.value
@@ -181,17 +177,14 @@ export default class PostController {
     //upvote or downvote a comment
     voteComment(value, commentId) {
         let voteNumber = parseInt(value)
-        console.log("receiving vote: ", voteNumber)
         //find comment object
         let comment = store.state.activePost.comments.find(c => {
             return c._id == commentId
         })
-
         //determine if user has already voted on that comment
         let prevVote = comment.votes.find(vote => {
             return vote.userId == store.state.user._id
         })
-        console.log("prev vote found: ", prevVote)
         //if user has previously voted the same value, set it to 0
         if (prevVote && prevVote.value == voteNumber) {
             voteNumber = 0;
